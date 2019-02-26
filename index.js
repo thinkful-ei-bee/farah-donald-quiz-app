@@ -41,29 +41,26 @@ function generateQuestionsWithAnswers(answerList){
 }
 
 function generateQuestionList(num){ //HTML 
-  console.log('question');
+  //console.log('question');
   let questionContainer = [];
   questionContainer.push(
     `<h1>${QUIZ[num].question}</h1> 
         <div class="quiz-questions-page"></div>`
   );   
   for (let letter in QUIZ[num].answers){
-    questionContainer.push(`<div class="quiz-questions">
-                <label>
-                <input type="radio" id="Meredith" name="questions${num}" value=${QUIZ[num].answers[letter]}>
-                ${QUIZ[num].answers[letter]}</label>
-        </div>`);
+    questionContainer.push(
+      `<div class="quiz-questions">
+        <label>
+        <input class="quiz-answer" type="radio" id="Meredith" name="questions${num}" value="${QUIZ[num].answers[letter]}">
+        ${QUIZ[num].answers[letter]}</label>
+      </div>`);
   }
   questionContainer.push(
-    `<button type="submit">Next</button>
-    </div>`);
-  questionContainer = questionContainer.join('')
-  return questionContainer;
-}
-
-
-function renderQuestionText(){
-
+    `<div>
+        <button type="submit" class="js-next-button" >Next</button>
+     </div>`);
+  questionContainer = questionContainer.join('');
+  $('.js-quiz-all').html(questionContainer);
 }
 
 function startButton(){
@@ -71,10 +68,6 @@ function startButton(){
 }
 
 function handleStartButton(){
-
-}
-
-function nextButton(){
 
 }
 
@@ -86,25 +79,23 @@ function getChosenAnswer(){
 function checkAnswer(answer, questionNumber) {
   // looks at QUIZ object to validate user's answer against correct answer
   if(answer === QUIZ.correctAnswer[questionNumber]) {
-    return true;
+    return true; 
   } else {
     return false;
   }
 }
 
-function handleNextButton() {
-  $('.js-next-question').on('click', function(e) {
+
+function handleNextButton() { // event listener
+  $('.js-next-button').on('click', function(e) {
     e.preventDefault();
     console.log('handleNextButton has ran');
-    $('.js-quiz-questions-page').prop('checked', true);
+
+    console.log($('.quiz-answer:checked').val());
     // console.log($('.js-quiz-questions-page').prop('checked', true));
-    // if(!STORE.questionAnswered) {
-    //   checkAnswer(getChosenAnswer(), questionNumber);
-    //   generateQuestionsWithAnswers();
-    // } else {
-    //   generateQuestionList();
-    // }
+    
   });
+  render();
 }
 
 function hasQuestionBeenAnswered() {
@@ -135,6 +126,8 @@ function render() {
 function main(){
 // this is all "controller" functions that listen for user input
   handleNextButton();
+  //generateQuestionList(STORE.current_question);
+
 }
 
 $(main);
