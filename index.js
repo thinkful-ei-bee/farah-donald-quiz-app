@@ -64,7 +64,10 @@ function generateQuestionList(num){ //HTML
 }
 
 function startButton(){
-
+  $('.js-start-button').on('click', event => {
+    event.preventDefault();
+    console.log('start button ran');
+  });
 }
 
 function handleStartButton(){
@@ -91,11 +94,16 @@ function handleNextButton() { // event listener
     e.preventDefault();
     console.log('handleNextButton has ran');
 
-    console.log($('.quiz-answer:checked').val());
+    
+    const answeredQuestion = ($('.quiz-answer:checked').val());
+    if (!answeredQuestion){
+      alert('Must choose answer');
+    }
+    
     // console.log($('.js-quiz-questions-page').prop('checked', true));
     
   });
-  render();
+  //render();
 }
 
 function hasQuestionBeenAnswered() {
@@ -118,15 +126,16 @@ function handleRestartButton(){
 
 }
 
-function render() {
-  // this would be all "view" functions that update the DOM
-  generateQuestionList(STORE.current_question);
-}
+// function render() {
+//   // this would be all "view" functions that update the DOM
+//   generateQuestionList(STORE.current_question);
+// } 
 
 function main(){
 // this is all "controller" functions that listen for user input
+  generateQuestionList(STORE.current_question);
+  startButton();  
   handleNextButton();
-  //generateQuestionList(STORE.current_question);
 
 }
 
