@@ -16,30 +16,24 @@
 // user clicks next
 
 const QUIZ = [
-    {
-        question: 'Who does Michael Scott hate more than anyone else?',
-        answers: {
-            a: 'Meredith Palmer',
-            b: 'Angela ', 
-            c: 'Todd Packer', 
-            d: 'Toby Flenderson'
-        },
-        correctAnswer: 'd'
+  {
+    question: 'Who does Michael Scott hate more than anyone else?',
+    answers: {
+      a: 'Meredith Palmer',
+      b: 'Angela ', 
+      c: 'Todd Packer', 
+      d: 'Toby Flenderson'
     },
-    {
-        question: "....",
-        answers: {
-
-        }
-        correctAnswer: '...'
-    },
-]
+    correctAnswer: 'd'
+  }
+];
 
 const STORE = {
   questionPage: [],
   userResponse: [],
   quizScore: [],
-  questionAnswered: false
+  questionAnswered: false,
+  current_question: 0
 };
 
 function generateQuestionsWithAnswers(answerList){
@@ -47,33 +41,24 @@ function generateQuestionsWithAnswers(answerList){
 }
 
 function generateQuestionList(num){ //HTML 
-    console.log('question');
-    let questionContainer = '';
-    questionContainer.push(
-        `<h1>${QUIZ[num].question}</h1> 
+  console.log('question');
+  let questionContainer = [];
+  questionContainer.push(
+    `<h1>${QUIZ[num].question}</h1> 
         <div class="quiz-questions-page"></div>`
-        )   
-    for (let i = 0; i < QUIZ[num].question.length; i++){
-        
-    }
-        <div class="quiz-questions">
-                <input type="radio" id="Meredith" name="quiz questions" value="Meredith Palmer">
-                <label for="Meredith">Meredith Palmer</label>
-        </div>
-        <div class="quiz-questions">
-                <input type="radio" id="Angela" name="quiz questions" value="Angela">
-                <label for="Angela">Angela</label>
-        </div>
-        <div class="quiz-questions">
-                <input type="radio" id="Todd Packer" name="quiz questions" value="Todd Packer">
-                <label for="Todd Packer">Todd Packer</label>
-        </div>
-        <div class="quiz-questions">
-                <input type="radio" id="Toby Flenderson" name="quiz questions" value="Toby Flenderson">
-                <label for="Toby Flenderson">Toby Flenderson</label>
-        </div>
-        <button type="submit">Next</button>
-    </div>}
+  );   
+  for (let letter in QUIZ[num].answers){
+    questionContainer.push(`<div class="quiz-questions">
+                <label>
+                <input type="radio" id="Meredith" name="questions${num}" value=${QUIZ[num].answers[letter]}>
+                ${QUIZ[num].answers[letter]}</label>
+        </div>`);
+  }
+  questionContainer.push(
+    `<button type="submit">Next</button>
+    </div>`);
+  questionContainer = questionContainer.join('')
+  return questionContainer;
 }
 
 
@@ -143,7 +128,13 @@ function handleRestartButton(){
 }
 
 function render() {
+  // this would be all "view" functions that update the DOM
+  generateQuestionList(STORE.current_question);
+}
+
+function main(){
+// this is all "controller" functions that listen for user input
   handleNextButton();
 }
 
-$(render);
+$(main);
