@@ -15,13 +15,25 @@
 // shows correct answer
 // user clicks next
 
-const QUIZ = {
-  questions: ['Who does Michael Scott hate more than anyone else?',],
-  allAnswers: [
-    ['Meredith Palmer','Angela ','Todd Packer','Toby Flenderson'],
-  ],
-  correctAnswer:['Toby Flenderson']
-};
+const QUIZ = [
+    {
+        question: 'Who does Michael Scott hate more than anyone else?',
+        answers: {
+            a: 'Meredith Palmer',
+            b: 'Angela ', 
+            c: 'Todd Packer', 
+            d: 'Toby Flenderson'
+        },
+        correctAnswer: 'd'
+    },
+    {
+        question: "....",
+        answers: {
+
+        }
+        correctAnswer: '...'
+    },
+]
 
 const STORE = {
   questionPage: [],
@@ -30,13 +42,40 @@ const STORE = {
   questionAnswered: false
 };
 
-function generateQuestionsWithAnswers(){
+function generateQuestionsWithAnswers(answerList){
   // highlights correct answer and wrong answer if necessary
 }
 
-function generateQuestionList(){
-
+function generateQuestionList(num){ //HTML 
+    console.log('question');
+    let questionContainer = '';
+    questionContainer.push(
+        `<h1>${QUIZ[num].question}</h1> 
+        <div class="quiz-questions-page"></div>`
+        )   
+    for (let i = 0; i < QUIZ[num].question.length; i++){
+        
+    }
+        <div class="quiz-questions">
+                <input type="radio" id="Meredith" name="quiz questions" value="Meredith Palmer">
+                <label for="Meredith">Meredith Palmer</label>
+        </div>
+        <div class="quiz-questions">
+                <input type="radio" id="Angela" name="quiz questions" value="Angela">
+                <label for="Angela">Angela</label>
+        </div>
+        <div class="quiz-questions">
+                <input type="radio" id="Todd Packer" name="quiz questions" value="Todd Packer">
+                <label for="Todd Packer">Todd Packer</label>
+        </div>
+        <div class="quiz-questions">
+                <input type="radio" id="Toby Flenderson" name="quiz questions" value="Toby Flenderson">
+                <label for="Toby Flenderson">Toby Flenderson</label>
+        </div>
+        <button type="submit">Next</button>
+    </div>}
 }
+
 
 function renderQuestionText(){
 
