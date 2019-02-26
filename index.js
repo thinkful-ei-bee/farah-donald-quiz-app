@@ -16,18 +16,25 @@
 // user clicks next
 
 const QUIZ = {
-    questions: [""],
-    allAnswers: [],
-    correctAnswer:[]
+  questions: ['Who does Michael Scott hate more than anyone else?',],
+  allAnswers: [
+    ['Meredith Palmer','Angela ','Todd Packer','Toby Flenderson'],
+  ],
+  correctAnswer:['Toby Flenderson']
 };
 
 const STORE = {
-    questionPage: [currentQuestion, answerChoices, correctAnswer],
-    userResponse: [],
-    quizScore: [],
+  questionPage: [],
+  userResponse: [],
+  quizScore: [],
+  questionAnswered: false
 };
 
-function generateAnswerList(){
+function generateQuestionsWithAnswers(){
+  // highlights correct answer and wrong answer if necessary
+}
+
+function generateQuestionList(){
 
 }
 
@@ -47,12 +54,41 @@ function nextButton(){
 
 }
 
+function getChosenAnswer(){
+  // responsible for pulling user-chosen answer after next button has been pressed
+
+}
+
+function checkAnswer(answer, questionNumber) {
+  // looks at QUIZ object to validate user's answer against correct answer
+  if(answer === QUIZ.correctAnswer[questionNumber]) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 function handleNextButton() {
+  $('.js-next-question').on('click', function(e) {
+    e.preventDefault();
+    console.log('handleNextButton has ran');
+    $('.js-quiz-questions-page').prop('checked', true);
+    // console.log($('.js-quiz-questions-page').prop('checked', true));
+    // if(!STORE.questionAnswered) {
+    //   checkAnswer(getChosenAnswer(), questionNumber);
+    //   generateQuestionsWithAnswers();
+    // } else {
+    //   generateQuestionList();
+    // }
+  });
+}
+
+function hasQuestionBeenAnswered() {
 
 }
 
 function progressBar(){
-    // access the updated store and update progress bar
+  // access the updated store and update progress bar
 }
 
 function quizScore(){
@@ -67,6 +103,8 @@ function handleRestartButton(){
 
 }
 
+function render() {
+  handleNextButton();
+}
 
-
-$(handleAnswersSubmitted);
+$(render);
