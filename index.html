@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Quiz App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <h1>The Office Quiz</h1>
+    <button type="submit">Start quiz</button>
+
+    <progress value="0" max="10"></progress>
+    <p>0 correct, 0 incorrect</p>
+    <h1>Question 1: Who does Michael Scott hate more than anyone else?</h1> 
+    <div class="quiz-questions-page">
+        <div class="quiz-questions">
+                <input type="radio" id="Meredith" name="quiz questions" value="Meredith Palmer">
+                <label for="Meredith">Meredith Palmer</label>
+        </div>
+        <div class="quiz-questions">
+                <input type="radio" id="Angela" name="quiz questions" value="Angela">
+                <label for="Angela">Angela</label>
+        </div>
+        <div class="quiz-questions">
+                <input type="radio" id="Todd Packer" name="quiz questions" value="Todd Packer">
+                <label for="Todd Packer">Todd Packer</label>
+        </div>
+        <div class="quiz-questions">
+                <input type="radio" id="Toby Flenderson" name="quiz questions" value="Toby Flenderson">
+                <label for="Toby Flenderson">Toby Flenderson</label>
+        </div>
+        <button type="submit">Next</button>
+    </div>
+
+
+    
+    
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cuid/1.3.8/browser-cuid.min.js"></script>
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+</body>
+</html>
