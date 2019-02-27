@@ -24,7 +24,7 @@ const QUIZ = [
       c: 'Todd Packer', 
       d: 'Toby Flenderson'
     },
-    correctAnswer: 'Toby Flenderson'
+    correctAnswer: 'd'
   },
   {
     question: 'What are Scott’s Tots?',
@@ -103,50 +103,67 @@ function renderStart() {
   $('.container').html(startHTML);
 }
 
-function renderQuestionList(num){ //HTML 
+function renderQuestionList(){ //HTML 
   console.log('renderQuestionList ran');
+  let num = STORE.current_question;
   let questionContainer = [];
   questionContainer.push(
     `<h1>${QUIZ[num].question}</h1> 
         <div class="quiz-questions-page"></div>`
   );   
 
-  for (let letter in QUIZ[num].answers){// if empty, render without
-    questionContainer.push(
-      `<div class="quiz-questions ${
-        STORE.questionAnswered === letter ? 'correct' : ''
-      
-      }">
-        <label>
-        <input class="quiz-answer" type="radio" id="Meredith" name="questions${num}" value="${letter}">
-        ${QUIZ[num].answers[letter]}</label>
-      </div>`);
-  }
-  questionContainer.push(
-    `<div>
-        <button type="submit" class="js-next-button" >Next</button>
-      </div>`);
-  questionContainer = questionContainer.join('');
-  $('.container').html(questionContainer);
-
-
-  
   // let questionClass = ''; then, if (!store.QuestionAnswered) {questionClass = logic}
-  for (let letter in QUIZ[num].answers){// if empty, render without
-    questionContainer.push(
-      `<div class="quiz-questions ${STORE.questionAnswered === letter ? 'correct' : ''}">
-        <label>
-        <input class="quiz-answer" type="radio" id="Meredith" name="questions${num}" value="${letter}">
-        ${QUIZ[num].answers[letter]}</label>
-      </div>`);
+  for (let letter in QUIZ[num].answers){
+    if (!STORE.questionAnswered) {
+      questionContainer.push(
+        `<div class="quiz-questions">
+          <label>
+          <input class="quiz-answer" type="radio" id="Meredith" name="questions${num}" value="${letter}">
+          ${QUIZ[num].answers[letter]}</label>
+        </div>`);
+    }
+    else if (letter === QUIZ[num].correctAnswer) {
+      questionContainer.push(
+        `<div class="quiz-questions correct">
+          <label>
+          <input class="quiz-answer" type="radio" id="Meredith" name="questions${num}" value="${letter}">
+          ${QUIZ[num].answers[letter]}</label>
+        </div>`);
+    }
+    else if (STORE.questionAnswered === letter && STORE.questionAnswered !== QUIZ[num].correctAnswer) {
+      questionContainer.push(
+        `<div class="quiz-questions incorrect ">
+          <label>
+          <input class="quiz-answer" type="radio" id="Meredith" name="questions${num}" value="${letter}">
+          ${QUIZ[num].answers[letter]}</label>
+        </div>`);
+    }
+    else {
+      questionContainer.push(
+        `<div class="quiz-questions  ">
+          <label>
+          <input class="quiz-answer" type="radio" id="Meredith" name="questions${num}" value="${letter}">
+          ${QUIZ[num].answers[letter]}</label>
+        </div>`);
+    }
   }
-  questionContainer.push(
-    `<div>
-        <button type="submit" class="js-next-button" >Next</button>
-     </div>`);
+
+  if (STORE.questionAnswered) {
+    questionContainer.push( 
+      `<div>
+        <button type="submit" class="js-next-button">Next</button>
+       </div>`);
+  }
+  else {
+    questionContainer.push(
+      `<div>
+          <button type="submit" class="js-submit-button">Submit</button>
+       </div>`);
+  }
   questionContainer = questionContainer.join('');
-  $('.container').html(questionContainer);
+  $('.container').html(questionContainer); 
 }
+
 
 function renderStatusBar(){
   console.log('renderStatusBar ran');
@@ -159,60 +176,33 @@ function handleStartButton(){
   $('.container').on('click','.js-start-button' , event => {
     event.preventDefault();
     console.log('start button ran');
-    renderQuestionList(STORE.current_question);
+    renderQuestionList();
     renderStatusBar();
   });
 }
 
-function handleNextButton() { // event listener
-  $('.container').on('click','.js-next-button' , event => {
+function handleSubmitButton() { // event listener
+  $('.container').on('click','.js-submit-button' , event => {
     event.preventDefault();
-    console.log('handleNextButton has ran');
+    console.log('handleSubmitButton has ran');
+    
     STORE.questionAnswered = $('.quiz-answer:checked').val();
-    renderQuestionList(STORE.current_question);
+    if(!STORE.questionAnswered) {
+      alert('Must choose answer');
+    }
+    renderQuestionList();
   });
 }
 
-function handleSubmitButton() {
-
+function handleNextButton() {
+  $('.container').on('click', '.js-next-button', event => {
+    event.preventDefault();
+    console.log('handle next button has run');
+    STORE.questionAnswered = '';
+    STORE.current_question++;
+    renderQuestionList();
+  });
 }
-
-// function renderValidation(userAnswer) { // checks to see if any answer has been selected, then
-//   // runs renderCorrect/renderIncorrect and then increments STORE values
-
-//   // check to see if answer has been selected
-//   if (!userAnswer){
-//     alert('Must choose answer');
-//   } else {
-//     // validate answer
-//     if (userAnswer === QUIZ[STORE.current_question].correctAnswer) {
-//       renderCorrect();
-//     }
-//     else {
-//       renderIncorrect(userAnswer);
-//     }
-//     STORE.questionAnswered = true;
-//     STORE.current_question++;
-//   }
-// }
-
-function renderAnswers() {
-
-}
-
-
-function renderCorrect() {
-  console.log('renderCorrect has run');
-  const correctAnswer = QUIZ[STORE.current_question].correctAnswer;
-  $('.quiz-questions').css('background-color', 'green');
-  renderStatusBar();
-}
-
-function renderIncorrect(userIncorrectAnswer) {
-  //
-  renderStatusBar();
-}
-
 
 function restartButton(){
 
@@ -226,6 +216,7 @@ function main(){
 // this is all "controller" functions that listen for user input
   renderStart();
   handleStartButton();
+  handleSubmitButton();
   handleNextButton();
 }
 
