@@ -35,6 +35,56 @@ const QUIZ = [
       d: 'Employees of the Michael Scott Paper Company'
     },
     correctAnswer: 'Employees of the Michael Scott Paper Company'
+  },
+  {
+    question: 'Who won the “” Dundee Award?',
+    answers: {
+      a: '',
+      b: '', 
+      c: '', 
+      d: ''
+    },
+    correctAnswer: ''
+  },
+  {
+    question: 'Who is Dwight’s best man?',
+    answers: {
+      a: '',
+      b: '', 
+      c: '', 
+      d: ''
+    },
+    correctAnswer: ''
+  },
+  {
+    question: 'Who did Michael hit with his car?',
+    answers: {
+      a: '',
+      b: '', 
+      c: '', 
+      d: ''
+    },
+    correctAnswer: ''
+  },
+  {
+    question: 'What was the fundraiser for the company 5k for?',
+    answers: {
+      a: '',
+      b: '', 
+      c: '', 
+      d: ''
+    },
+    correctAnswer: ''
+  },
+  {
+    question: 'What was in pot that Kevin dropped in the office?',
+    answers: {
+      a: '',
+      b: '', 
+      c: '', 
+      d: ''
+    },
+    correctAnswer: ''
   }
 ];
 
@@ -105,7 +155,9 @@ function handleNextButton() { // event listener
   });
 }
 
-function renderValidation(userAnswer) {
+function renderValidation(userAnswer) { // checks to see if any answer has been selected, then
+  // runs renderCorrect/renderIncorrect and then increments STORE values
+
   // check to see if answer has been selected
   if (!userAnswer){
     alert('Must choose answer');
@@ -124,7 +176,9 @@ function renderValidation(userAnswer) {
 
 
 function renderCorrect() {
-  //
+  console.log('renderCorrect has run');
+  const correctAnswer = QUIZ[STORE.current_question].correctAnswer;
+  $(`input[questions${num}]:checked`).css('background-color', 'green');
   renderStatusBar();
 }
 
