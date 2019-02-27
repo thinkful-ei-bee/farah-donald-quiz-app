@@ -175,7 +175,6 @@ function incrementCorrectScore(){
 function renderStatusBar(){
   console.log('renderStatusBar ran');
   let statusBar = STORE.current_question + 1;
-  
   let statusBarHTML = `<progress value="${statusBar}" max="${QUIZ.length}"></progress>
   <p>${STORE.quizCorrect} correct, ${STORE.quizIncorrect} incorrect</p>`;
   $('.statusBar').html(statusBarHTML);
@@ -214,7 +213,7 @@ function handleNextButton() {
     STORE.questionAnswered = '';
     STORE.current_question++;
     renderQuestionList();
-
+    renderStatusBar();
   });
 }
 
@@ -234,7 +233,10 @@ function handleRestartButton(){
     STORE.current_question = 0;
     STORE.quizCorrect = 0;
     STORE.quizIncorrect = 0;
+    console.log(STORE.quizCorrect);
+    console.log(STORE.quizIncorrect);
     renderQuestionList();
+    renderStatusBar();
   });
 }
 
