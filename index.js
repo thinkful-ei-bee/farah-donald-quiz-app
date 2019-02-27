@@ -25,6 +25,76 @@ const QUIZ = [
       d: 'Toby Flenderson'
     },
     correctAnswer: 'd'
+  },
+  {
+    question: 'What are Scott’s Tots?',
+    answers: {
+      a: '',
+      b: '', 
+      c: '', 
+      d: ''
+    },
+    correctAnswer: ''
+  },
+  {
+    question: 'What are Scott’s Tots?',
+    answers: {
+      a: '',
+      b: '', 
+      c: '', 
+      d: ''
+    },
+    correctAnswer: ''
+  },
+  {
+    question: 'Who won the “” Dundee Award?',
+    answers: {
+      a: '',
+      b: '', 
+      c: '', 
+      d: ''
+    },
+    correctAnswer: ''
+  },
+  {
+    question: 'Who is Dwight’s best man?',
+    answers: {
+      a: '',
+      b: '', 
+      c: '', 
+      d: ''
+    },
+    correctAnswer: ''
+  },
+  {
+    question: 'Who did Michael hit with his car?',
+    answers: {
+      a: '',
+      b: '', 
+      c: '', 
+      d: ''
+    },
+    correctAnswer: ''
+  },
+  {
+    question: 'What was the fundraiser for the company 5k for?',
+    answers: {
+      a: '',
+      b: '', 
+      c: '', 
+      d: ''
+    },
+    correctAnswer: ''
+  },
+  {
+    question: 'What was in pot that Kevin dropped in the office?',
+    answers: {
+      a: '',
+      b: '', 
+      c: '', 
+      d: ''
+    },
+    correctAnswer: ''
   }
 ];
 
@@ -36,6 +106,18 @@ const STORE = {
   current_question: 0
 };
 
+// RENDER WELCOME
+function renderWelcome(){
+  let welcomePage = [];
+  welcomePage.push(
+    `<h1>The Office Quiz</h1>
+    <button class="js-start-button" type="submit">Start quiz</button> `
+  );
+  welcomePage = welcomePage.join('');
+  $('.js-quiz-all').html(welcomePage);
+}
+
+
 function generateQuestionsWithAnswers(answerList){
   // highlights correct answer and wrong answer if necessary
 }
@@ -44,8 +126,8 @@ function generateQuestionList(num){ //HTML
   //console.log('question');
   let questionContainer = [];
   questionContainer.push(
-    `<h1>${QUIZ[num].question}</h1> 
-        <div class="quiz-questions-page"></div>`
+    `<div class="quiz-questions-page">
+        <h1>${QUIZ[num].question}</h1>`
   );   
   for (let letter in QUIZ[num].answers){
     questionContainer.push(
@@ -58,21 +140,14 @@ function generateQuestionList(num){ //HTML
   questionContainer.push(
     `<div>
         <button type="submit" class="js-next-button" >Next</button>
-     </div>`);
+     </div>
+    </div>`);
   questionContainer = questionContainer.join('');
   $('.js-quiz-all').html(questionContainer);
+    
 }
 
-function startButton(){
-  $('.js-start-button').on('click', event => {
-    event.preventDefault();
-    console.log('start button ran');
-  });
-}
 
-function handleStartButton(){
-
-}
 
 function getChosenAnswer(){
   // responsible for pulling user-chosen answer after next button has been pressed
@@ -89,9 +164,21 @@ function checkAnswer(answer, questionNumber) {
 }
 
 
+function startButton(){
+  $('.js-start-button').on('click', event => {
+    event.preventDefault();
+    console.log('start button ran');
+    generateQuestionList(STORE.current_question);
+  });
+}
+
+function handleStartButton(){
+
+}
+
 function handleNextButton() { // event listener
-  $('.js-next-button').on('click', function(e) {
-    e.preventDefault();
+  $('.js-next-button').on('click', event => {
+    event.preventDefault();
     console.log('handleNextButton has ran');
 
     
@@ -133,7 +220,8 @@ function handleRestartButton(){
 
 function main(){
 // this is all "controller" functions that listen for user input
-  generateQuestionList(STORE.current_question);
+  //generateQuestionList(STORE.current_question);
+  renderWelcome();
   startButton();  
   handleNextButton();
 
