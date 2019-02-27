@@ -92,7 +92,7 @@ const STORE = {
   questionPage: [],
   userResponse: [],
   quizScore: [],
-  questionAnswered: false,
+  questionAnswered: '',
   current_question: 0
 };
 
@@ -110,11 +110,12 @@ function renderQuestionList(num){ //HTML
     `<h1>${QUIZ[num].question}</h1> 
         <div class="quiz-questions-page"></div>`
   );   
-  for (let letter in QUIZ[num].answers){
+  // let questionClass = ''; then, if (!store.QuestionAnswered) {questionClass = logic}
+  for (let letter in QUIZ[num].answers){// if empty, render without
     questionContainer.push(
-      `<div class="quiz-questions">
+      `<div class="quiz-questions ${STORE.questionAnswered === letter ? 'correct' : ''}">
         <label>
-        <input class="quiz-answer" type="radio" id="Meredith" name="questions${num}" value="${QUIZ[num].answers[letter]}">
+        <input class="quiz-answer" type="radio" id="Meredith" name="questions${num}" value="${letter}">
         ${QUIZ[num].answers[letter]}</label>
       </div>`);
   }
@@ -146,13 +147,13 @@ function handleNextButton() { // event listener
   $('.container').on('click','.js-next-button' , event => {
     event.preventDefault();
     console.log('handleNextButton has ran');
-    if (!STORE.questionAnswered) {
-      renderValidation($('.quiz-answer:checked').val());
-    }
-    else {
-      renderQuestionList(STORE.current_question);
-    }
+    STORE.questionAnswered = $('.quiz-answer:checked').val();
+    renderQuestionList(STORE.current_question);
   });
+}
+
+function handleSubmitButton() {
+
 }
 
 function renderValidation(userAnswer) { // checks to see if any answer has been selected, then
@@ -174,11 +175,15 @@ function renderValidation(userAnswer) { // checks to see if any answer has been 
   }
 }
 
+function renderAnswers() {
+
+}
+
 
 function renderCorrect() {
   console.log('renderCorrect has run');
   const correctAnswer = QUIZ[STORE.current_question].correctAnswer;
-  $(`input[questions${num}]:checked`).css('background-color', 'green');
+  $('.quiz-questions').css('background-color', 'green');
   renderStatusBar();
 }
 
