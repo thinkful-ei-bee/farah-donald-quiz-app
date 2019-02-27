@@ -20,81 +20,21 @@ const QUIZ = [
     question: 'Who does Michael Scott hate more than anyone else?',
     answers: {
       a: 'Meredith Palmer',
-      b: 'Angela ', 
+      b: 'Angela Martin', 
       c: 'Todd Packer', 
       d: 'Toby Flenderson'
     },
-    correctAnswer: 'd'
+    correctAnswer: 'Toby Flenderson'
   },
   {
     question: 'What are Scott’s Tots?',
     answers: {
-      a: '',
-      b: '', 
-      c: '', 
-      d: ''
+      a: 'Michael\'s favorite breakfast tater tots',
+      b: 'Michael\'s affectionate name for his future grandkids', 
+      c: 'Students that Michael pledged to pay college tuition for', 
+      d: 'Employees of the Michael Scott Paper Company'
     },
-    correctAnswer: ''
-  },
-  {
-    question: 'What are Scott’s Tots?',
-    answers: {
-      a: '',
-      b: '', 
-      c: '', 
-      d: ''
-    },
-    correctAnswer: ''
-  },
-  {
-    question: 'Who won the “” Dundee Award?',
-    answers: {
-      a: '',
-      b: '', 
-      c: '', 
-      d: ''
-    },
-    correctAnswer: ''
-  },
-  {
-    question: 'Who is Dwight’s best man?',
-    answers: {
-      a: '',
-      b: '', 
-      c: '', 
-      d: ''
-    },
-    correctAnswer: ''
-  },
-  {
-    question: 'Who did Michael hit with his car?',
-    answers: {
-      a: '',
-      b: '', 
-      c: '', 
-      d: ''
-    },
-    correctAnswer: ''
-  },
-  {
-    question: 'What was the fundraiser for the company 5k for?',
-    answers: {
-      a: '',
-      b: '', 
-      c: '', 
-      d: ''
-    },
-    correctAnswer: ''
-  },
-  {
-    question: 'What was in pot that Kevin dropped in the office?',
-    answers: {
-      a: '',
-      b: '', 
-      c: '', 
-      d: ''
-    },
-    correctAnswer: ''
+    correctAnswer: 'Employees of the Michael Scott Paper Company'
   }
 ];
 
@@ -106,28 +46,19 @@ const STORE = {
   current_question: 0
 };
 
-// RENDER WELCOME
-function renderWelcome(){
-  let welcomePage = [];
-  welcomePage.push(
-    `<h1>The Office Quiz</h1>
-    <button class="js-start-button" type="submit">Start quiz</button> `
-  );
-  welcomePage = welcomePage.join('');
-  $('.js-quiz-all').html(welcomePage);
+function renderStart() {
+  console.log('renderStart ran');
+  let startHTML = `<h1>The Office Quiz</h1>
+  <button type="submit" class ="js-start-button">Start quiz</button>`;
+  $('.container').html(startHTML);
 }
 
-
-function generateQuestionsWithAnswers(answerList){
-  // highlights correct answer and wrong answer if necessary
-}
-
-function generateQuestionList(num){ //HTML 
-  //console.log('question');
+function renderQuestionList(num){ //HTML 
+  console.log('renderQuestionList ran');
   let questionContainer = [];
   questionContainer.push(
-    `<div class="quiz-questions-page">
-        <h1>${QUIZ[num].question}</h1>`
+    `<h1>${QUIZ[num].question}</h1> 
+        <div class="quiz-questions-page"></div>`
   );   
   for (let letter in QUIZ[num].answers){
     questionContainer.push(
@@ -140,70 +71,68 @@ function generateQuestionList(num){ //HTML
   questionContainer.push(
     `<div>
         <button type="submit" class="js-next-button" >Next</button>
-     </div>
-    </div>`);
+     </div>`);
   questionContainer = questionContainer.join('');
-  $('.js-quiz-all').html(questionContainer);
-    
+  $('.container').html(questionContainer);
 }
 
-
-
-function getChosenAnswer(){
-  // responsible for pulling user-chosen answer after next button has been pressed
-
+function renderStatusBar(){
+  console.log('renderStatusBar ran');
+  let statusBarHTML = `<progress value="0" max="10"></progress>
+  <p>0 correct, 0 incorrect</p>`;
+  $('.statusBar').html(statusBarHTML);
 }
 
-function checkAnswer(answer, questionNumber) {
-  // looks at QUIZ object to validate user's answer against correct answer
-  if(answer === QUIZ.correctAnswer[questionNumber]) {
-    return true; 
+function handleStartButton(){
+  $('.container').on('click','.js-start-button' , event => {
+    event.preventDefault();
+    console.log('start button ran');
+    renderQuestionList(STORE.current_question);
+    renderStatusBar();
+  });
+}
+
+function handleNextButton() { // event listener
+  $('.container').on('click','.js-next-button' , event => {
+    event.preventDefault();
+    console.log('handleNextButton has ran');
+    if (!STORE.questionAnswered) {
+      renderValidation($('.quiz-answer:checked').val());
+    }
+    else {
+      renderQuestionList(STORE.current_question);
+    }
+  });
+}
+
+function renderValidation(userAnswer) {
+  // check to see if answer has been selected
+  if (!userAnswer){
+    alert('Must choose answer');
   } else {
-    return false;
+    // validate answer
+    if (userAnswer === QUIZ[STORE.current_question].correctAnswer) {
+      renderCorrect();
+    }
+    else {
+      renderIncorrect(userAnswer);
+    }
+    STORE.questionAnswered = true;
+    STORE.current_question++;
   }
 }
 
 
-function startButton(){
-  $('.js-start-button').on('click', event => {
-    event.preventDefault();
-    console.log('start button ran');
-    generateQuestionList(STORE.current_question);
-  });
+function renderCorrect() {
+  //
+  renderStatusBar();
 }
 
-function handleStartButton(){
-
+function renderIncorrect(userIncorrectAnswer) {
+  //
+  renderStatusBar();
 }
 
-function handleNextButton() { // event listener
-  $('.js-next-button').on('click', event => {
-    event.preventDefault();
-    console.log('handleNextButton has ran');
-
-    
-    const answeredQuestion = ($('.quiz-answer:checked').val());
-    if (!answeredQuestion){
-      alert('Must choose answer');
-    }
-    
-    // console.log($('.js-quiz-questions-page').prop('checked', true));
-    
-  });
-  //render();
-}
-
-function hasQuestionBeenAnswered() {
-
-}
-
-function progressBar(){
-  // access the updated store and update progress bar
-}
-
-function quizScore(){
-
-}
 
 function restartButton(){
 
@@ -213,18 +142,11 @@ function handleRestartButton(){
 
 }
 
-// function render() {
-//   // this would be all "view" functions that update the DOM
-//   generateQuestionList(STORE.current_question);
-// } 
-
 function main(){
 // this is all "controller" functions that listen for user input
-  //generateQuestionList(STORE.current_question);
-  renderWelcome();
-  startButton();  
+  renderStart();
+  handleStartButton();
   handleNextButton();
-
 }
 
 $(main);
