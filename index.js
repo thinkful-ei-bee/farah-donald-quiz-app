@@ -110,6 +110,27 @@ function renderQuestionList(num){ //HTML
     `<h1>${QUIZ[num].question}</h1> 
         <div class="quiz-questions-page"></div>`
   );   
+
+  for (let letter in QUIZ[num].answers){// if empty, render without
+    questionContainer.push(
+      `<div class="quiz-questions ${
+        STORE.questionAnswered === letter ? 'correct' : ''
+      
+      }">
+        <label>
+        <input class="quiz-answer" type="radio" id="Meredith" name="questions${num}" value="${letter}">
+        ${QUIZ[num].answers[letter]}</label>
+      </div>`);
+  }
+  questionContainer.push(
+    `<div>
+        <button type="submit" class="js-next-button" >Next</button>
+      </div>`);
+  questionContainer = questionContainer.join('');
+  $('.container').html(questionContainer);
+
+
+  
   // let questionClass = ''; then, if (!store.QuestionAnswered) {questionClass = logic}
   for (let letter in QUIZ[num].answers){// if empty, render without
     questionContainer.push(
@@ -156,24 +177,24 @@ function handleSubmitButton() {
 
 }
 
-function renderValidation(userAnswer) { // checks to see if any answer has been selected, then
-  // runs renderCorrect/renderIncorrect and then increments STORE values
+// function renderValidation(userAnswer) { // checks to see if any answer has been selected, then
+//   // runs renderCorrect/renderIncorrect and then increments STORE values
 
-  // check to see if answer has been selected
-  if (!userAnswer){
-    alert('Must choose answer');
-  } else {
-    // validate answer
-    if (userAnswer === QUIZ[STORE.current_question].correctAnswer) {
-      renderCorrect();
-    }
-    else {
-      renderIncorrect(userAnswer);
-    }
-    STORE.questionAnswered = true;
-    STORE.current_question++;
-  }
-}
+//   // check to see if answer has been selected
+//   if (!userAnswer){
+//     alert('Must choose answer');
+//   } else {
+//     // validate answer
+//     if (userAnswer === QUIZ[STORE.current_question].correctAnswer) {
+//       renderCorrect();
+//     }
+//     else {
+//       renderIncorrect(userAnswer);
+//     }
+//     STORE.questionAnswered = true;
+//     STORE.current_question++;
+//   }
+// }
 
 function renderAnswers() {
 
