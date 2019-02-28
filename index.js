@@ -97,7 +97,7 @@ const STORE = {
 
 function renderStart() {
   console.log('renderStart ran');
-  let startHTML = `<h1>The Office Quiz</h1>
+  let startHTML = `<h1>Only true fans of The Office can pass this quiz!</h1>
   <button type="submit" class ="js-start-button">Start quiz</button>`;
   $('.container').html(startHTML);
 }
