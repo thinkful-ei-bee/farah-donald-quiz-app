@@ -108,7 +108,7 @@ function renderQuestionList(){ //HTML
   let questionContainer = [];
   questionContainer.push(
     `<h1>${QUIZ[num].question}</h1> 
-        <div class="quiz-questions-page"></div><form>`
+        <div class="quiz-questions-page"></div><form role="search">`
   );   
 
   // let questionClass = ''; then, if (!store.QuestionAnswered) {questionClass = logic}
