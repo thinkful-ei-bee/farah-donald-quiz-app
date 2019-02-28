@@ -1,7 +1,80 @@
-.correct {
-    background-color: green;
-}
-
-.incorrect {
-    background-color: red;
-}
+body {
+    background: url(https://wallpaperplay.com/walls/full/0/0/2/77843.jpg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+  
+  .container {
+    margin: auto;
+    margin-right: 650px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 600px;
+    height: 300px;
+    overflow-wrap: break-word;
+  }
+  
+  .statusBar{
+    margin-top: 160px;
+    float: right;
+    margin-right: 650px;
+  }
+  
+  
+  
+  .score {
+    margin-top: 0px;
+  }
+  
+  h1 {
+    padding-left: 30px;
+  }
+  
+  button, input[type="radio"]{
+    margin-left: 30px;
+  }
+  
+  button {
+    margin-top: 5px;
+    height: 35px;
+  }
+  
+  button:hover{
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+  
+  input[type="radio"]:hover{
+    cursor: pointer;
+  }
+  
+  .quiz-answer{
+    margin-bottom: 15px;
+  }
+  
+  .correct {
+      background-color:rgba(76, 175, 80, 0.7);
+      width: fit-content;
+      border-radius: 2px;
+      padding-top: 1px;
+      height: 22px;
+  }
+  
+  .incorrect  {
+      background-color: rgba(255,0,0, 0.7);
+      border-radius: 2px;
+      padding-top: 1px;
+      width: max-content;
+      height: 22px;
+  }
+  
+  .restart-page{
+    text-align: center;
+  }
+  
+  .js-restart-button{
+    margin: auto;
+  }

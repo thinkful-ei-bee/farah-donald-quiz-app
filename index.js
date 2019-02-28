@@ -72,12 +72,12 @@ const QUIZ = [
       a: 'Cancer Awareness',
       b: 'St. Jude Children\'s Research Hospital Fund', 
       c: 'The Red Cross', 
-      d: 'Michael Scott\'s Dunder Mifflin Scranton Meredith Palmer Memorial Celebrity Rabies Awareness Pro-Am Fun Run Race For The Cure'
+      d: 'Michael Scott\'s Dunder Mifflin Scranton Meredith Palmer Memorial Celebrity Rabies Awareness Pro-Am Fun Run Race for the Cure'
     },
     correctAnswer: 'd'
   },
   {
-    question: 'What was in pot that Kevin dropped in the office?',
+    question: 'What was in the pot that Kevin dropped in the office?',
     answers: {
       a: 'Kevin\'s famous chili',
       b: 'Kevin\'s amazing tacos', 
@@ -157,7 +157,7 @@ function renderQuestionList(){ //HTML
     questionContainer.push(
       `<div>
           <button type="submit" class="js-submit-button">Submit</button>
-       </div></form>`);
+       </div>`);
   }
   questionContainer = questionContainer.join('');
   $('.container').html(questionContainer); 
@@ -175,8 +175,9 @@ function incrementCorrectScore(){
 function renderStatusBar(){
   console.log('renderStatusBar ran');
   let statusBar = STORE.current_question + 1;
-  let statusBarHTML = `<progress value="${statusBar}" max="${QUIZ.length}"></progress>
-  <p>${STORE.quizCorrect} correct, ${STORE.quizIncorrect} incorrect</p>`;
+  
+  let statusBarHTML = `<progress class='bar' value="${statusBar}" max="${QUIZ.length}"></progress>
+    <p class='score'>${STORE.quizCorrect} correct, ${STORE.quizIncorrect} incorrect</p></div></form>`;
   $('.statusBar').html(statusBarHTML);
 }
 
@@ -213,15 +214,17 @@ function handleNextButton() {
     STORE.questionAnswered = '';
     STORE.current_question++;
     renderQuestionList();
-    renderStatusBar();
+
   });
 }
 
 function generateFinalPageHtml(){
   console.log('renderStart ran');
-  let startHTML = `<h1>Good job!</h1>
+  let startHTML = `<div class="restart-page">
+  <h1>Good job!</h1>
   <p>You got: ${STORE.quizCorrect}/${QUIZ.length}</p>
-  <button type="submit" class ="js-restart-button">Restart quiz</button>`;
+  <button type="submit" class ="js-restart-button">Restart quiz</button>
+  </div>`;
   $('.container').html(startHTML);
 }
 
@@ -233,10 +236,7 @@ function handleRestartButton(){
     STORE.current_question = 0;
     STORE.quizCorrect = 0;
     STORE.quizIncorrect = 0;
-    console.log(STORE.quizCorrect);
-    console.log(STORE.quizIncorrect);
     renderQuestionList();
-    renderStatusBar();
   });
 }
 
